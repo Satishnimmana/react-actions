@@ -8,7 +8,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    stseps:
+    steps:
     - uses: actions/checkout@main
     - uses: Satishnimmana/react-actions@main
       with:
