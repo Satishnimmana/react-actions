@@ -4,22 +4,17 @@ on:
   push:
     branches:
     - main
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@main
-    - name: Upload binary to S3 bucket
-      uses: tpaschalis/s3-sync-action@master
-    - name: copy file to s3
-    -  run: aws s3 sync index.html  s3://github-action-test-02
-    - name: user and password
+    - uses: jakejarvis/s3-sync-action@master
       with:
-    
-        AWS_REGION: 'us-east-1' # optional: defaults to us-east-1
-        AWS_S3_BUCKET: 'github-action-test-02'
+        args: --acl public-read --follow-symlinks --delete  --exclude '.git*/*'
+      env:
+        AWS_S3_BUCKET: "github-action-test-02"
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        
+        AWS_REGION: 'us-east-1'   # optional: defaults to us-east-1
+        SOURCE_DIR: 'public'      # optional: defaults to entire repository
