@@ -12,6 +12,8 @@ jobs:
     - uses: actions/checkout@main
     - name: Upload binary to S3 bucket
       uses: tpaschalis/s3-sync-action@master
+    - name: copy file to s3
+       run:aws s3 sync index.html  s3://github-action-test-02
       with:
         args: --acl public-read  
       env:
