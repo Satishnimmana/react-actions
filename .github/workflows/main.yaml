@@ -11,7 +11,7 @@ jobs:
     - uses: actions/checkout@main
     - uses: Satishnimmana/github-actions-demo@main
     - name: Setup node
-       uses: actions/setup-node@v2
+      uses: actions/setup-node@v2
      - name: Install dependencies
        run: npm install
      - name: Build static file
