@@ -13,8 +13,6 @@ jobs:
           node-version: '14'
       - run: npm install -g bats
       - run: bats -v
-        with:
-          args: --acl public-read --follow-symlinks --delete  --exclude '.git*/*'
         env:
           AWS_S3_BUCKET: 'github-satish'
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
