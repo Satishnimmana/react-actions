@@ -1,14 +1,19 @@
-name: Terraform Apply
-on: 
+name: Upload file
+on:
   push:
     branches:
-     - main
+    - main
 jobs:
-  terraform_apply:
-    runs-on: centos-latest
+  deploy:
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@main
-      env: |
-       sudo yum install -y yum-utils
-       sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
-       sudo yum -y install terraform
+    - uses: jakejarvis/s3-sync-action@master
+      with:
+        args: --acl public-read --follow-symlinks --delete  --exclude '.git*/*'
+      env:
+        AWS_S3_BUCKET: 'github-satish'
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: 'us-east-1'   # optional: defaults to us-east-1
+		
